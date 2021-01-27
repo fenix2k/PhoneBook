@@ -95,9 +95,8 @@ mvn package
 
 Далее помещаем его в отдельную папку и распаковываем JAR файл
 ````
-cd ..
 mkdir www
-cp ./PhoneBook/target/PhoneBook-1.0.jar ./www
+cp ./target/PhoneBook-1.0.jar ./www
 cd ./www
 jar -xf PhoneBook-1.0.jar
 ````
@@ -105,6 +104,7 @@ jar -xf PhoneBook-1.0.jar
 ````
 java org.springframework.boot.loader.JarLauncher
 ````
+По-умолчанию веб-сервер будет слушать порт 8888.\
 Перед запуском приложения необходимо произвести настройку конфирурационныого файла (см. ниже).
 
 ### Конфигурирование
