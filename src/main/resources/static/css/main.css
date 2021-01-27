@@ -1,0 +1,109 @@
+html {
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 11pt;
+}
+
+header {
+    background-color: steelblue;
+    width: 100%;
+    color: black;
+}
+header .d-flex {
+    height: 6em;
+}
+header .d-flex div {
+    align-self: center;
+}
+
+header a {
+    color: black;
+}
+
+body {
+    background-color: ghostwhite;
+}
+
+footer {
+    background-color: ghostwhite;
+    margin-top: 1em;
+}
+
+.container-page {;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2em;
+}
+.page-title {
+}
+
+#data-table {
+    text-align: center;
+    vertical-align: center;
+
+}
+
+.text-align-right {
+    text-align: right;
+}
+.text-align-left {
+    text-align: left;
+}
+.text-underline {
+    text-decoration: black underline;
+}
+.error-message {
+    background-color: rgba(227, 33, 71, 0.33);
+    padding: 8px 12px 8px 12px;
+    margin-bottom: 2em;
+    border-radius: 7px;
+}
+.info-message {
+    background-color: goldenrod;
+    padding: 8px 12px 8px 12px;
+    margin-bottom: 2em;
+    border-radius: 7px;
+}
+.error {
+    color: crimson;
+}
+.field-description {
+    color: dimgray;
+}
+.counter-column, .edit-column, .delete-column {
+    width: 30px !important;
+}
+.font-size-12 {
+    font-size: 12pt !important;
+}
+.font-size-11 {
+    font-size: 11pt !important;
+}
+.font-size-10 {
+    font-size: 10pt !important;
+}
+.font-size-9 {
+    font-size: 9pt !important;
+}
+.font-size-default {
+    font-size: 9pt !important;
+}
+
+.invisible-row {
+    background-color: lightgray !important;
+    opacity: 60%;
+}
+.deleted-row {
+    background-color: #ff3440 !important;
+    opacity: 60%;
+}
+.min-col-width {
+    width: 20px;
+}
+.boss {
+    font-weight: bold;
+}
+.bigboss {
+    font-weight: bold;
+    text-decoration: underline;
+}

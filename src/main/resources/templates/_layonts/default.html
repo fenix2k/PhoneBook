@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:utext="${pageTitle}">Title</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+  <link href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+  <link href="/webjars/datatables/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen"/>
+  <link href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="screen"/>
+
+  <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+  <script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"></script>
+  <script src="/webjars/popper.js/2.5.4/umd/popper.min.js"></script>
+  <script src="/webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+  <script src="/webjars/datatables/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script src="/webjars/datatables/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+</head>
+<body>
+
+  <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+    <div class="p-2">
+      <span>LOGO</span>
+      <span>РОМАШКА</span>
+    </div>
+    <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+      <title>PhoneBook</title>
+    </a>
+
+    <div class="navbar-nav-scroll">
+      <ul class="navbar-nav bd-navbar-nav flex-row">
+        <li class="nav-item">
+          <a class="nav-link " href="/" title="Телефонный справочник">Телефонный справочник</a>
+        </li>
+        <th:block th:if="principal">
+          <li th:if="${#strings.contains(principal?.getAuthorities()?:'', 'ROLE_ADMIN' )
+              || #strings.contains(principal?.getAuthorities()?:'', 'ROLE_WRITER' )}" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Сотрудники
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="/employees/">Все записи</a>
+              <a class="dropdown-item" href="/employees?type=local">Локальные</a>
+              <a class="dropdown-item" href="/employees?type=ldap">Импорт из AD</a>
+            </div>
+          </li>
+          <li th:if="${#strings.contains(principal?.getAuthorities()?:'', 'ROLE_ADMIN' )}" class="nav-item">
+            <a class="nav-link" href="/admin/users/" title="Пользователи">Пользователи</a>
+          </li>
+          <li th:if="${#strings.contains(principal?.getAuthorities()?:'', 'ROLE_ADMIN' )}" class="nav-item">
+            <a class="nav-link" href="/admin/roles/" title="Роли">Роли</a>
+          </li>
+          <li th:if="${#strings.contains(principal?.getAuthorities()?:'', 'ROLE_ADMIN' )}" class="nav-item">
+            <a class="nav-link" href="/admin/settings/" title="Настройки">Настройки</a>
+          </li>
+        </th:block>
+      </ul>
+    </div>
+
+    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+      <li class="nav-item"></li>
+      <li class="nav-item"></li>
+      <li class="nav-item">
+        <div class="p-2">
+          <div th:if="${principal}">
+            <i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
+            <span class="text-underline" th:utext="${principal?.getUsername()}"></span>
+            <span class="text-align-right">| <a th:href="@{/logout}" class="text-underline"> Выйти</a></span>
+          </div>
+          <div th:unless="${principal}">
+            <span class="text-align-right"><a th:href="@{/login}" class="text-underline"> Войти</a></span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </header>
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col">
+        <div class="container-page d-flex justify-content-center">
+          <div  th:insert="${pageContent} :: content">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="container-fluid">
+    </div>
+  </footer>
+
+</body>
+
+</html>

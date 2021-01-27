@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+</head>
+<body>
+
+<div th:fragment="content">
+  <script th:src="@{/js/main.js}"></script>
+  <div class="container border p-3 pt-4 pb-4" style="width: 40em">
+    <div class="border-bottom border-secondary">
+      <h2 th:if="${entity.id}">Редактирование пользователя</h2>
+      <h2 th:unless="${entity.id}">Новый пользователь</h2>
+    </div>
+    <div class="mt-3 pt-2 ">
+
+      <div class="error-message" th:if="${errors}">
+        <th:block th:each ="error : ${errors}">
+          <span th:text="${error}"></span><br/>
+        </th:block>
+      </div>
+
+      <form name="validateForm" class="form needs-validation was-validated" action="#" method="POST"
+            th:action="${entity.id} ? @{/admin/users/edit} : @{/admin/users/create}"
+            th:object="${entity}">
+        <fieldset>
+          <div class="form-body pb-2">
+            <div class="form-group row">
+              <label for="login" class="col-sm-2 col-form-label" th:text="Login"></label>
+              <div class="col-sm-10">
+                <input type="text" id="login" th:field="*{login}" class='form-control' minlength="2" maxlength='50' required>
+                <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}" th:class="'error'"></span>
+
+                <input th:if="*{id}" type="hidden" id="id" th:field="*{id}" class='form-control' required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="email" class="col-sm-2 col-form-label" th:text="Email"></label>
+              <div class="col-sm-10">
+                <input type="email" id="email" th:field="*{email}" class='form-control' minlength="3" maxlength='50' required>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:class="'error'"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="externalId" class="col-sm-2 col-form-label" th:text="ExternalID"></label>
+              <div class="col-sm-10">
+                <input type="text" id="externalId" th:field="*{externalId}" class='form-control' minlength="2" maxlength='100'>
+                <span th:if="${#fields.hasErrors('externalId')}" th:errors="*{externalId}" th:class="'error'"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="password" class="col-sm-2 col-form-label" th:text="Password"></label>
+              <div class="col-sm-10">
+                <th:block th:if="*{id}">
+                  <input th:if="*{id}" type="password" id="password" th:field="*{password}" class='form-control' >
+                  <span th:class="'field-description'">Leave it blank to avoid changing your password</span>
+                </th:block>
+
+                <input th:unless="*{id}" type="password" id="password" th:field="*{password}" class='form-control' minlength=5 maxlength=50 required>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:class="'error'"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="enabled" class="col-sm-2 col-form-label" th:text="Enabled"></label>
+              <div class="col-sm-10">
+                <select id="enabled" th:field="*{enabled}" class='form-control' required>
+                  <option th:value="'true'" th:text="Да"></option>
+                  <option th:value="'false'" th:text="Нет"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}" th:class="'error'"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="roles" class="col-sm-2 col-form-label" th:text="Roles"></label>
+              <div class="col-sm-10">
+                <select id="roles" th:field="*{roles}" class='form-control' multiple size="5" required>
+                  <th:block th:each ="role : ${roles}">
+                    <option th:value="${role.id}" th:text="${role.name}"></option>
+                  </th:block>>
+                </select>
+                <span th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" th:class="'error'"></span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-footer pt-3 border-secondary border-top d-flex justify-content-end">
+            <input type="submit" id="submit" class="btn btn-primary ml-2" th:value="'Сохранить'" />
+            <a type="button" class="btn btn-secondary ml-2" th:href="@{/admin/users/}">Назад</a>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

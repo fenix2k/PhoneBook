@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+</head>
+<body>
+<!--/*@thymesVar id="entity" type="java.util.List<ru.fenix2k.PhoneBook.Entity.Employee>"*/-->
+<!--/*@thymesVar id="entities" type="java.util.List<ru.fenix2k.PhoneBook.Entity.Employee>"*/-->
+<div th:fragment="content" >
+  <script th:src="@{/js/main.js}"></script>
+  <div class="" style="">
+    <div class="page-title pb-3">
+      <h2 th:utext="${pageTitle}">Справочник записей</h2>
+    </div>
+    <div class="info-message" th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+    <div class="action-buttons">
+      <a th:if="${type} == 'local'" th:href="@{/employees/create}"
+         class="btn btn-outline-primary" role="button">
+        Добавить запись
+      </a>
+      <a th:if="${type} == 'ldap'" th:href="@{/employees/ldap/import}"
+         class="btn btn-outline-primary" role="button">
+        Импорт из AD
+      </a>
+      <a th:if="${type} != 'ldap'" href="#"
+         class="btn btn-outline-primary button-priority-enable" role="button">
+        Редактировать приоритет
+      </a>
+      <a th:href="@{/employees/setPriorities}"
+         class="btn btn-outline-primary button-priority-save d-none" role="button">
+        Сохранить приоритет
+      </a>
+      <button type="button" class="btn btn-outline-primary button-priority-cancel d-none">
+        Отмена
+      </button>
+    </div>
+
+    <div class="table-responsive mt-3">
+      <table id="data-table" class="table table-striped table-bordered table-hover font-size-default">
+        <thead id="table-head">
+          <tr>
+            <th class="counter-column min-col-width">№</th>
+            <th class="d-none">№</th>
+            <th title="Фамилия Имя Отчество">ФИО</th>
+            <th title="Электронная почта">Email</th>
+            <th title="Должность">Должность</th>
+            <th title="Структурное подразделение">Подразделение</th>
+            <th title="Компания">Компания</th>
+            <th title="Внутренний телефон">Внутренний телефон</th>
+            <th title="Городской телефон">Городской телефон</th>
+            <th title="Мобильный телефон">Мобильный телефон</th>
+            <th title="Размещение">Адрес</th>
+            <th title="Идертификатор пользователя если импортирован из внешней системы">Внешний ID</th>
+            <th class="min-col-width" title="Приоритет сортировки">Приоритет</th>
+            <th class="min-col-width" title="Название CSS класса, используемого для выделения строки">Стиль выделения</th>
+            <th class="min-col-width" title="Дата и время создания записи">Дата создания</th>
+            <th class="min-col-width" title="Дата и время изменения записи">Дата изменения</th>
+
+            <th th:if="${type == 'local' || type == 'ldap'}" title="Показать или скрыть запись">Видим</th>
+            <th th:if="${type} == 'local'" title="Пометить запись на удаление">Удалён</th>
+            <th th:if="${type} == 'local'" class="edit-column min-col-width"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></th>
+            <th th:if="${type} == 'local'" class="delete-column min-col-width"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></th>
+            <th class="checkbox-column d-none"><input type="checkbox" /></th>
+          </tr>
+        </thead>
+        <tbody id="table-body" about="api">
+          <tr th:each ="entity : ${entities}"
+              th:class="${entity.isVisible}?'':'invisible-row'"
+              th:classappend="${entity.isDeleted}?'deleted-row':''">
+            <td class="counter" ></td>
+            <td class="d-none entity-id" th:utext="${entity.id}"></td>
+            <td th:utext="${entity.fullName}"></td>
+            <td th:utext="${entity.email}"></td>
+            <td th:utext="${entity.title}"></td>
+            <td th:utext="${entity.department}"></td>
+            <td th:utext="${entity.company}"></td>
+            <td th:utext="${entity.internalPhoneNumber}"></td>
+            <td th:utext="${entity.cityPhoneNumber}"></td>
+            <td th:utext="${entity.mobilePhoneNumber}"></td>
+            <td th:utext="${entity.address}"></td>
+            <td th:utext="${entity.externalId}"></td>
+            <td class="field-displayPriority" th:utext="${entity.displayPriority}"></td>
+            <td th:utext="${entity.displayClassStyle}"></td>
+            <td th:utext="${#temporals.format(entity.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:utext="${#temporals.format(entity.updated, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
+            <td th:if="${type == 'local' || type == 'ldap'}">
+              <a class="edit-action" th:href="@{/employees/setVisible(id=${entity.id},isVisible=${not entity.isVisible})}">
+                <i th:if="${entity.isVisible}" class="fa fa-eye fa-lg" aria-hidden="true" title="Скрыть"></i>
+                <i th:unless="${entity.isVisible}" class="fa fa-eye-slash fa-lg" aria-hidden="true" title="Сделать видимым"></i>
+              </a>
+            </td>
+            <td th:if="${type} == 'local'">
+              <a class="delete-action" th:href="@{/employees/setDisabled(id=${entity.id},isDeleted=${not entity.isDeleted})}">
+                <i th:if="${entity.isDeleted}"class="fa fa-reply fa-lg" aria-hidden="true" title="Отменить удаление"></i>
+                <i th:unless="${entity.isDeleted}"class="fa fa-trash fa-lg" aria-hidden="true" title="Пометить на удаление"></i>
+              </a>
+            </td>
+
+            <td th:if="${type} == 'local'">
+              <a class="edit-action" th:href="@{'/employees/edit/' + ${entity.id}}">
+                <i class="fa fa-pencil fa-lg" aria-hidden="true" ></i>
+              </a>
+            </td>
+            <td th:if="${type} == 'local'">
+              <a class="delete-action" th:href="@{'/employees/delete/' + ${entity.id}}">
+                <i class="fa fa-times fa-lg" aria-hidden="true" ></i>
+              </a>
+            </td>
+            <td class="checkbox-column d-none"><input type="checkbox" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
