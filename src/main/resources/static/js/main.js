@@ -29,12 +29,13 @@ function initDataTable() {
   const dataTable = $('#data-table').DataTable({
     columnDefs:
       [{
-        targets: [0, -1, -2],
+        targets: 'nosort',
         searchable: false,
         orderable: false,
       }],
     scrollX: false,
     fixedColumns: false,
+    pageLength: 50,
     //order: [[1, 'asc']]
   });
   dataTable

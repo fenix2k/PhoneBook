@@ -40,7 +40,7 @@
       <table id="data-table" class="table table-striped table-bordered table-hover font-size-default">
         <thead id="table-head">
           <tr>
-            <th class="counter-column min-col-width">№</th>
+            <th class="counter-column min-col-width nosort">№</th>
             <th class="d-none">№</th>
             <th title="Фамилия Имя Отчество">ФИО</th>
             <th title="Электронная почта">Email</th>
@@ -57,11 +57,11 @@
             <th class="min-col-width" title="Дата и время создания записи">Дата создания</th>
             <th class="min-col-width" title="Дата и время изменения записи">Дата изменения</th>
 
-            <th th:if="${type == 'local' || type == 'ldap'}" title="Показать или скрыть запись">Видим</th>
-            <th th:if="${type} == 'local'" title="Пометить запись на удаление">Удалён</th>
-            <th th:if="${type} == 'local'" class="edit-column min-col-width"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></th>
-            <th th:if="${type} == 'local'" class="delete-column min-col-width"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></th>
-            <th class="checkbox-column d-none"><input type="checkbox" /></th>
+            <th th:if="${type == 'local' || type == 'ldap'}" class="nosort" title="Показать или скрыть запись">Видим</th>
+            <th th:if="${type} == 'local'" class="nosort" title="Пометить запись на удаление">Удалён</th>
+            <th th:if="${type} == 'local'" class="edit-column min-col-width nosort"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></th>
+            <th th:if="${type} == 'local'" class="delete-column min-col-width nosort"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></th>
+            <th class="checkbox-column d-none nosort"><input type="checkbox" /></th>
           </tr>
         </thead>
         <tbody id="table-body" about="api">
