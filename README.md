@@ -98,7 +98,7 @@ jar -xf PhoneBook-1.0.jar
 ````
 Запуск приложения
 ````
-java org.springframework.boot.loader.JarLauncher
+sudo java org.springframework.boot.loader.JarLauncher
 ````
 По-умолчанию веб-сервер будет слушать порт 8888.\
 Перед запуском приложения необходимо произвести настройку конфирурационныого файла (см. ниже).
@@ -207,7 +207,7 @@ phonebook.employee.sort-direction=DESC
 ##### Запуск приложения и вход
 После завершения все настроек запустите приложение командой
 ````
-java org.springframework.boot.loader.JarLauncher
+sudo java org.springframework.boot.loader.JarLauncher
 ````
 Далее в браузере необходимо пройти по следующему адресу:
 ````

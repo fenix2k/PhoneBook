@@ -1,5 +1,9 @@
+HELP.md
 target
 .mvn
+mvnw
+mvnw.cmd
+_deploy-test
 
 cookie.txt
 ### IntelliJ IDEA ###
